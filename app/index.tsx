@@ -1,7 +1,7 @@
-import { router } from "expo-router";
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { useCoins } from "../hook/useCoins";
+import CoinCard from "../components/coinCard";
 
 export default function Index() {
   const { data, isLoading, error } = useCoins();
@@ -16,19 +16,11 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <Text>Welcome to coin app !</Text>
       <ScrollView>
         {data.map((e: any, i: any) => {
           return (
             // we pass parameters via the router to display specific information on the next screen
-            <Pressable key={i} onPress={() => router.push({ pathname: "/coinDetail", params: { name: e.name } })}>
-              <View style={styles.coinCard}>
-                <Text>ICON</Text>
-                <Text>{e.name}</Text>
-                <Text>{e.dirtyCode}</Text>
-                <Text>{e.priceInUSD}</Text>
-              </View>
-            </Pressable>
+            <CoinCard key={i} coin={e} />
           );
         })}
       </ScrollView>
