@@ -1,4 +1,4 @@
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { useCoins } from "../hook/useCoins";
 import CoinCard from "../components/coinCard";
@@ -16,14 +16,12 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        {data.map((e: any, i: any) => {
-          return (
-            // we pass parameters via the router to display specific information on the next screen
-            <CoinCard key={i} coin={e} />
-          );
-        })}
-      </ScrollView>
+      {/* data is the source, keyextractor for the key, renderitem use an item from data */}
+      <FlatList 
+        data={data}
+        keyExtractor={(item) => item.id}
+        renderItem={({item}) => <CoinCard coin={item}/>}
+      />
     </View>
   );
 }

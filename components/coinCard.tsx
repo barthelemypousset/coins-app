@@ -1,13 +1,21 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import { router } from "expo-router";
 
-export default function CoinCard({ coin }: any) {
+import { Coin } from "../types/coins";
+
+type CoinCardProps = { coin: Coin };
+
+export default function CoinCard({ coin }: CoinCardProps) {
+  // caching the icon of the coin  
+  const iconUrl = `https://delta.app/images/${coin.id}/icon-64.png`;
+
   return (
     // we pass parameters via the router to display specific information on the next screen
     <Pressable onPress={() => router.push({ pathname: "/coinDetail", params: { name: coin.name } })}>
       <View style={styles.coinCard}>
-        <Text>ICON</Text>
+        <Image source={{ uri: iconUrl }} style={styles.icon} />
+
         <Text>{coin.name}</Text>
         <Text>{coin.dirtyCode}</Text>
         <Text>{coin.priceInUSD}</Text>
@@ -20,9 +28,15 @@ const styles = StyleSheet.create({
   coinCard: {
     flex: 1,
     flexDirection: "row",
+    justifyContent:"space-between",
+    alignItems: "center",
     backgroundColor: "#98bd6a",
     padding: 10,
     margin: 10,
     borderRadius: 10,
+  },
+  icon: {
+    width: 32,
+    height: 32,
   },
 });
