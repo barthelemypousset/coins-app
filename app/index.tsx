@@ -1,23 +1,9 @@
-import { Link, router } from "expo-router";
-import { StatusBar } from "expo-status-bar";
+import { router } from "expo-router";
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
-import { apiDelta } from "../api/delta";
-import { useQuery } from "@tanstack/react-query";
+import { useCoins } from "../hook/useCoins";
 
 export default function Index() {
-  const fetchCoins = async () => {
-    let response = await apiDelta.get("/coins");
-    return response.data.data;
-  };
-
-  const useCoins = () => {
-    return useQuery({
-      queryKey: ["coins"],
-      queryFn: fetchCoins,
-    });
-  };
-
   const { data, isLoading, error } = useCoins();
 
   if (isLoading) {
@@ -34,7 +20,8 @@ export default function Index() {
       <ScrollView>
         {data.map((e: any, i: any) => {
           return (
-            <Pressable key={i} onPress={() => router.push("/coinDetail")}>
+            // we pass parameters via the router to display specific information on the next screen
+            <Pressable key={i} onPress={() => router.push({ pathname: "/coinDetail", params: { name: e.name } })}>
               <View style={styles.coinCard}>
                 <Text>ICON</Text>
                 <Text>{e.name}</Text>
