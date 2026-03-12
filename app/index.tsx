@@ -5,7 +5,7 @@ import CoinCard from "../components/coinCard";
 
 export default function Index() {
   // useInfiniteQuery returns initial data + states and function to load following pages + states
-  const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useCoins();
+  const { data, isLoading, isError, refetch, fetchNextPage, hasNextPage, isFetchingNextPage } = useCoins();
 
   if (isLoading) {
     return <ActivityIndicator />;
@@ -30,14 +30,18 @@ export default function Index() {
         renderItem={({ item }) => <CoinCard coin={item} />}
         // callback when end of list is reached
         onEndReached={() => {
-          if (hasNextPage) {
-            fetchNextPage({ cancelRefetch: false });
+          if (hasNextPage && !isFetchingNextPage) {
+            fetchNextPage();
           }
         }}
         // Distance from end of list where the bottom is considered reached
         onEndReachedThreshold={0.5}
         // Component to show on next page load
         ListFooterComponent={isFetchingNextPage ? <ActivityIndicator /> : null}
+        refreshing={isLoading}
+        onRefresh={() => {
+          refetch();
+        }}
       />
     </View>
   );
