@@ -1,10 +1,11 @@
-import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
 
 import { useCoins } from "../hook/useCoins";
 import CoinCard from "../components/coinCard";
 
 export default function Index() {
-  const { data, isLoading, error } = useCoins();
+  // useInfiniteQuery returns initial data + states and function to load following pages + states
+  const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useCoins();
 
   if (isLoading) {
     return <ActivityIndicator />;
@@ -14,13 +15,29 @@ export default function Index() {
     return <Text>Fail</Text>;
   }
 
+  // useInfiniteQuery return data as an array of the previous data + the new fetched one so we flaten this array
+  const coins = data?.pages.flatMap((page) => page) ?? [];
+  console.log("index: total coins", coins.length);
+
   return (
     <View style={styles.container}>
-      {/* data is the source, keyextractor for the key, renderitem use an item from data */}
-      <FlatList 
-        data={data}
+      <FlatList
+        // data is the source
+        data={coins}
+        // keyextractor for the key
         keyExtractor={(item) => item.id}
-        renderItem={({item}) => <CoinCard coin={item}/>}
+        // renderitem use an item from data
+        renderItem={({ item }) => <CoinCard coin={item} />}
+        // callback when end of list is reached
+        onEndReached={() => {
+          if (hasNextPage) {
+            fetchNextPage({ cancelRefetch: false });
+          }
+        }}
+        // Distance from end of list where the bottom is considered reached
+        onEndReachedThreshold={0.5}
+        // Component to show on next page load
+        ListFooterComponent={isFetchingNextPage ? <ActivityIndicator /> : null}
       />
     </View>
   );
