@@ -7,12 +7,12 @@ import { Coin } from "../types/coins";
 type CoinCardProps = { coin: Coin };
 
 export default function CoinCard({ coin }: CoinCardProps) {
-  // caching the icon of the coin  
+  // Icon of the coin  
   const iconUrl = `https://delta.app/images/${coin.id}/icon-64.png`;
 
   return (
     // we pass parameters via the router to display specific information on the next screen
-    <Pressable onPress={() => router.push({ pathname: "/coinDetail", params: { name: coin.name } })}>
+    <Pressable onPress={() => router.push({ pathname: "/coinDetail", params: { id: coin.id } })}>
       <View style={styles.coinCard}>
         <Image source={{ uri: iconUrl }} style={styles.icon} />
 

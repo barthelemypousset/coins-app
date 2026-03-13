@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Button, FlatList, StyleSheet, Text, View } from "react-native";
 
 import { useCoins } from "../hook/useCoins";
 import CoinCard from "../components/coinCard";
@@ -7,17 +7,25 @@ export default function Index() {
   // useInfiniteQuery returns initial data + states and function to load following pages + states
   const { data, isLoading, isError, refetch, fetchNextPage, hasNextPage, isFetchingNextPage } = useCoins();
 
+  const handleRefresh = async () => {
+    await refetch();
+  };
+
   if (isLoading) {
     return <ActivityIndicator />;
   }
 
-  if (error) {
-    return <Text>Fail</Text>;
+  if (isError) {
+    return (
+      <View>
+        <Text>Failed to load coin data</Text>
+        <Button title="Retry" onPress={handleRefresh} />
+      </View>
+    );
   }
 
   // useInfiniteQuery return data as an array of the previous data + the new fetched one so we flaten this array
   const coins = data?.pages.flatMap((page) => page) ?? [];
-  console.log("index: total coins", coins.length);
 
   return (
     <View style={styles.container}>
@@ -40,7 +48,7 @@ export default function Index() {
         ListFooterComponent={isFetchingNextPage ? <ActivityIndicator /> : null}
         refreshing={isLoading}
         onRefresh={() => {
-          refetch();
+          handleRefresh();
         }}
       />
     </View>
