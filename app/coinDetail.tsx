@@ -3,6 +3,8 @@ import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 
 import { useCoinDetail } from "../hook/useCoinDetail";
+import { useNetworkStatus } from "../hook/useNetworkStatus";
+import OfflineBanner from "../components/offlineBanner";
 
 export default function CoinDetailScreen() {
   // Get parameters from expo-router and thus, display coin detail from where the press happend
@@ -11,6 +13,7 @@ export default function CoinDetailScreen() {
   // useQuery returns initial data + states
   const { data, isLoading, isError, refetch } = useCoinDetail(id);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+  const { isOffline } = useNetworkStatus();
 
   const handleRefresh = async () => {
     await refetch();
@@ -32,6 +35,8 @@ export default function CoinDetailScreen() {
 
   return (
     <View style={{ padding: 16 }}>
+      {isOffline && <OfflineBanner />}
+
       <Image source={{ uri: `https://delta.app/images/${id}/icon-64.png` }} style={{ width: 64, height: 64 }} />
 
       <View style={{ flexDirection: "row", alignItems: "center" }}>

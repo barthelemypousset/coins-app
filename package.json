@@ -9,10 +9,13 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-community/netinfo": "^12.0.1",
     "@tanstack/react-query": "^5.90.21",
+    "@tanstack/react-query-devtools": "^4.43.0",
     "axios": "^1.13.6",
     "expo": "~54.0.33",
     "expo-constants": "~18.0.13",
+    "expo-dev-client": "~6.0.20",
     "expo-linking": "~8.0.11",
     "expo-router": "~6.0.23",
     "expo-status-bar": "~3.0.9",
@@ -22,6 +25,7 @@
     "react-native-screens": "~4.16.0"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^4.43.0",
     "@types/react": "~19.1.0",
     "typescript": "~5.9.2"
   },

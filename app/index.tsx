@@ -2,10 +2,13 @@ import { ActivityIndicator, Button, FlatList, StyleSheet, Text, View } from "rea
 
 import { useCoins } from "../hook/useCoins";
 import CoinCard from "../components/coinCard";
+import OfflineBanner from "../components/offlineBanner";
+import { useNetworkStatus } from "../hook/useNetworkStatus";
 
 export default function Index() {
   // useInfiniteQuery returns initial data + states and function to load following pages + states
   const { data, isLoading, isError, refetch, fetchNextPage, hasNextPage, isFetchingNextPage } = useCoins();
+  const { isOffline } = useNetworkStatus();
 
   const handleRefresh = async () => {
     await refetch();
@@ -29,6 +32,8 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
+      {isOffline && <OfflineBanner />}
+
       <FlatList
         // data is the source
         data={coins}
