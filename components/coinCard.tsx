@@ -7,7 +7,7 @@ import { Coin } from "../types/coins";
 type CoinCardProps = { coin: Coin };
 
 export default function CoinCard({ coin }: CoinCardProps) {
-  // Icon of the coin  
+  // Icon of the coin
   const iconUrl = `https://delta.app/images/${coin.id}/icon-64.png`;
 
   return (
@@ -27,8 +27,9 @@ export default function CoinCard({ coin }: CoinCardProps) {
 const styles = StyleSheet.create({
   coinCard: {
     flex: 1,
+    width: "90%", // Take full width of parent
     flexDirection: "row",
-    justifyContent:"space-between",
+    justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#98bd6a",
     padding: 10,

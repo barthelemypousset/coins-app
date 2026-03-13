@@ -1,9 +1,12 @@
-import { ActivityIndicator, Button, FlatList, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
 
 import { useCoins } from "../hook/useCoins";
-import CoinCard from "../components/coinCard";
-import OfflineBanner from "../components/offlineBanner";
 import { useNetworkStatus } from "../hook/useNetworkStatus";
+
+import CoinCard from "../components/CoinCard";
+import LoadingView from "../components/loadingView";
+import ErrorView from "../components/errorView";
+import OfflineBanner from "../components/OfflineBanner";
 
 export default function Index() {
   // useInfiniteQuery returns initial data + states and function to load following pages + states
@@ -15,16 +18,11 @@ export default function Index() {
   };
 
   if (isLoading) {
-    return <ActivityIndicator />;
+    return <LoadingView message="Loading coins..." />;
   }
 
   if (isError) {
-    return (
-      <View>
-        <Text>Failed to load coin data</Text>
-        <Button title="Retry" onPress={handleRefresh} />
-      </View>
-    );
+    return <ErrorView message="Failed to load coins" onRetry={refetch} />;
   }
 
   // useInfiniteQuery return data as an array of the previous data + the new fetched one so we flaten this array
@@ -66,13 +64,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  coinCard: {
-    flex: 1,
-    flexDirection: "row",
-    backgroundColor: "#98bd6a",
-    padding: 10,
-    margin: 10,
-    borderRadius: 10,
   },
 });
