@@ -6,8 +6,8 @@ import { useCoinDetail } from "../hook/useCoinDetail";
 import { useNetworkStatus } from "../hook/useNetworkStatus";
 
 import OfflineBanner from "../components/OfflineBanner";
-import LoadingView from "../components/loadingView";
-import ErrorView from "../components/errorView";
+import LoadingView from "../components/LoadingView";
+import ErrorView from "../components/ErrorView";
 
 export default function CoinDetailScreen() {
   // Get parameters from expo-router and thus, display coin detail from where the press happend

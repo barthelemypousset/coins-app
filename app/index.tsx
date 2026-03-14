@@ -4,8 +4,8 @@ import { useCoins } from "../hook/useCoins";
 import { useNetworkStatus } from "../hook/useNetworkStatus";
 
 import CoinCard from "../components/CoinCard";
-import LoadingView from "../components/loadingView";
-import ErrorView from "../components/errorView";
+import LoadingView from "../components/LoadingView";
+import ErrorView from "../components/ErrorView";
 import OfflineBanner from "../components/OfflineBanner";
 
 export default function Index() {
