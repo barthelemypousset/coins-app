@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import { router } from "expo-router";
 
-import { Coin } from "../types/coins";
+import { Coin } from "../src/types/coins";
 
 type CoinCardProps = { coin: Coin };
 
