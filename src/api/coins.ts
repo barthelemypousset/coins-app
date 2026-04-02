@@ -15,3 +15,7 @@ export const fetchCoinById = async (id: string) => {
   const response = await apiDelta.get(`/coins/${id}`);
   return response.data.data;
 };
+
+export const fetchImage = (id: string) => {
+  return `https://delta.app/images/${id}/icon-64.png`;
+};

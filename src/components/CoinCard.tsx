@@ -3,18 +3,16 @@ import React from "react";
 import { router } from "expo-router";
 
 import { Coin } from "../src/types/coins";
+import { fetchImage } from "../api/coins";
 
 type CoinCardProps = { coin: Coin };
 
 export default function CoinCard({ coin }: CoinCardProps) {
-  // Icon of the coin
-  const iconUrl = `https://delta.app/images/${coin.id}/icon-64.png`;
-
   return (
     // we pass parameters via the router to display specific information on the next screen
     <Pressable onPress={() => router.push({ pathname: "/coinDetail", params: { id: coin.id } })}>
       <View style={styles.coinCard}>
-        <Image source={{ uri: iconUrl }} style={styles.icon} />
+        <Image source={{ uri: fetchImage(coin.id) }} style={styles.icon} />
 
         <Text>{coin.name}</Text>
         <Text>{coin.dirtyCode}</Text>
